@@ -32,7 +32,11 @@ def parse_message(message, users):
         else: 
             status = invalid_login
     elif message["action"] == "logout":
+        users.logout()
         status = success
+    elif message["action"] == "pickle":
+        helpers.pickle_users(users)
+        status = "pickled"
     else:
         status = invalid_input
     return status, users.active

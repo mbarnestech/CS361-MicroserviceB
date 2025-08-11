@@ -1,13 +1,14 @@
+universal = "Public"
+
 class User:
-    def __init__(self, username, password):
+    def __init__(self, username, password=None):
         self.username = username
         self.password = password
 
 class Users:
-    public = "public"
-    def __init__(self):
-        self.users = []
-        self.active = public
+    def __init__(self, user=User(universal)):
+        self.users = [user]
+        self.active = user.username
 
     def addUser(self, username, password):
         self.users.append(User(username, password))
@@ -24,4 +25,4 @@ class Users:
             return False
     
     def logout(self):
-        self.active = public
+        self.active = universal
