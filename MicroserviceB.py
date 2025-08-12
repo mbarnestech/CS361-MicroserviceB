@@ -23,27 +23,29 @@ def set_up_server(socket_number):
     return socket
     
 def parse_message(message, users):
-    if message["action"] == "new":
+    if message["action"] == "create":
         users.addUser(message["username"], message["password"])
         status = success
     elif message["action"] == "login":
-        if users.login(message["username"], message["password"]):
+        logged_in = users.login(message["username"], message["password"])
+        if logged_in:
             status = success
         else: 
             status = invalid_login
     elif message["action"] == "logout":
         users.logout()
         status = success
-    elif message["action"] == "pickle":
+    elif message["action"] == "exit":
         helpers.pickle_users(users)
         status = "pickled"
+        helpers.exit_program()
     else:
         status = invalid_input
     return status, users.active
 
 
 if __name__ == "__main__":
-    socket_number, api_key = get_env_variables()
+    socket_number = get_env_variables()
     socket = set_up_server(socket_number)
     users = helpers.unpickle_users()
     if not users:

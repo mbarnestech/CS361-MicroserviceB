@@ -11,18 +11,16 @@ class Users:
         self.active = user.username
 
     def addUser(self, username, password):
-        self.users.append(User(username, password))
+        new_user = User(username, password)
+        self.users.append(new_user)
         self.active = username
 
     def login(self, username, password):
         for user in self.users:
-            if user.username == username:
-                if user.password == password:
-                    self.active = username
-                    return True
-                else:
-                    return False
-            return False
+            if user.username == username and user.password == password:
+                self.active = username
+                return True
+        return False
     
     def logout(self):
         self.active = universal
